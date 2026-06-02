@@ -1,70 +1,86 @@
 using UnityEngine;
 
-public class PlayerPickup : MonoBehaviour
+public class PickupSystem : MonoBehaviour
 {
+    public Camera playerCamera;
     public Transform handPoint;
     public float pickupDistance = 3f;
 
-    private Camera playerCamera;
-    private Flashlight heldFlashlight;
+    private GameObject heldObject;
     private Rigidbody heldRb;
-
-    void Start()
-    {
-        playerCamera = Camera.main;
-    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (heldFlashlight == null)
+            if (heldObject == null)
+            {
                 TryPickup();
+            }
             else
-                Drop();
-        }
-
-        if (heldFlashlight != null && Input.GetMouseButtonDown(0))
-        {
-            heldFlashlight.Toggle();
+            {
+                DropObject();
+            }
         }
     }
 
     void TryPickup()
     {
-        Ray ray = new Ray(
+        RaycastHit hit;
+
+        if (Physics.Raycast(
             playerCamera.transform.position,
-            playerCamera.transform.forward);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, pickupDistance))
+            playerCamera.transform.forward,
+            out hit,
+            pickupDistance))
         {
-            Flashlight flashlight = hit.collider.GetComponent<Flashlight>();
-
-            if (flashlight != null)
+            if (hit.collider.CompareTag("Pickup"))
             {
-                heldFlashlight = flashlight;
-                heldRb = flashlight.GetComponent<Rigidbody>();
+                heldObject = hit.collider.gameObject;
 
-                heldRb.isKinematic = true;
+                heldRb = heldObject.GetComponent<Rigidbody>();
 
-                flashlight.transform.SetParent(handPoint);
-                flashlight.transform.localPosition = Vector3.zero;
-                flashlight.transform.localRotation = Quaternion.identity;
+                if (heldRb != null)
+                {
+                    heldRb.isKinematic = true;
+                }
+
+                heldObject.transform.SetParent(handPoint);
+                heldObject.transform.localPosition = Vector3.zero;
+                heldObject.transform.localRotation = Quaternion.identity;
+
+                Debug.Log("Picked up " + heldObject.name);
             }
         }
     }
 
-    void Drop()
+    void DropObject()
     {
-        heldFlashlight.transform.SetParent(null);
+        heldObject.transform.SetParent(null);
 
-        heldRb.isKinematic = false;
+        if (heldRb != null)
+        {
+            heldRb.isKinematic = false;
 
-        heldRb.AddForce(
-            playerCamera.transform.forward * 2f,
-            ForceMode.Impulse);
+            heldRb.AddForce(
+                playerCamera.transform.forward * 2f,
+                ForceMode.Impulse);
+        }
 
-        heldFlashlight = null;
+        Debug.Log("Dropped " + heldObject.name);
+
+        heldObject = null;
         heldRb = null;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (playerCamera != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(
+                playerCamera.transform.position,
+                playerCamera.transform.position + playerCamera.transform.forward * pickupDistance);
+        }
     }
 }

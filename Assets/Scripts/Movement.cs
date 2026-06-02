@@ -76,17 +76,6 @@ public class Movement3D : MonoBehaviour
 
         rotationInput = Input.GetAxis("Horizontal");
 
-        // Debug movement input
-        if (moveInput != 0)
-        {
-            Debug.Log("Move Input: " + moveInput);
-        }
-
-        if (rotationInput != 0)
-        {
-            Debug.Log("Rotation Input: " + rotationInput);
-        }
-
         // Ground Check
         bool wasGrounded = isGrounded;
 

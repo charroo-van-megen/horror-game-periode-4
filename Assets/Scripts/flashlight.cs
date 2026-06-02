@@ -10,9 +10,18 @@ public class Flashlight : MonoBehaviour
         flashlightLight.enabled = false;
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Toggle();
+        }
+    }
+
     public void Toggle()
     {
         isOn = !isOn;
         flashlightLight.enabled = isOn;
+        Debug.Log("Flashlight " + (isOn ? "On" : "Off"));
     }
 }
