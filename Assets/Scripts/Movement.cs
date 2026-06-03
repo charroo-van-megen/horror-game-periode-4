@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Movement3D : MonoBehaviour
@@ -30,6 +31,9 @@ public class Movement3D : MonoBehaviour
     private bool isCrouching;
     private float currentSpeed;
 
+    // Event fired whenever the player jumps
+    public Action OnJump;
+
     // =========================
     // PUBLIC READ-ONLY ACCESS
     // =========================
@@ -40,19 +44,17 @@ public class Movement3D : MonoBehaviour
     public float MoveInput => moveInput;
     public float RotationInput => rotationInput;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         currentSpeed = walkSpeed;
     }
 
-    void Update()
+    private void Update()
     {
         moveInput = Input.GetAxis("Vertical");
         rotationInput = Input.GetAxis("Horizontal");
-
-        bool wasGrounded = isGrounded;
 
         isGrounded = Physics.CheckSphere(
             groundCheck.position,
@@ -72,7 +74,7 @@ public class Movement3D : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Move();
         Rotate();
@@ -95,7 +97,14 @@ public class Movement3D : MonoBehaviour
 
     private void Jump()
     {
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+        rb.linearVelocity = new Vector3(
+            rb.linearVelocity.x,
+            jumpForce,
+            rb.linearVelocity.z
+        );
+
+        // Notify listeners (such as FootstepAudio)
+        OnJump?.Invoke();
     }
 
     private void HandleSprint()
