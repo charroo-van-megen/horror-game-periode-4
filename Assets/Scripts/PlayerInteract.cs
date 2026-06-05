@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -11,16 +13,22 @@ public class PlayerInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Draw a ray forward from the camera, if anything is hit, check if it has an Interactable component and call Interact() on it
-        if (playerCam != null)
+        // On pressing E, we will check if there is an interactable object in front of the player using a RayCast, then execute the Interact() method on that object.
+        if (playerCam != null && Keyboard.current != null)
         {
-            Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, 3f))
+            if (Keyboard.current.eKey.wasPressedThisFrame)
             {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
+                Debug.Log("E key pressed, checking for interactable objects...");
+                Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 3f))
                 {
-                    interactable.Interact();
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        Debug.Log("Interacting with " + hit.collider.name);
+                        interactable.Interact();
+                    }
                 }
             }
         }
