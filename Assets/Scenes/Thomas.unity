@@ -742,6 +742,7 @@ GameObject:
   - component: {fileID: 919757625}
   - component: {fileID: 919757624}
   - component: {fileID: 919757628}
+  - component: {fileID: 919757629}
   m_Layer: 0
   m_Name: Cube
   m_TagString: LightSwitch
@@ -854,6 +855,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e29685a0d9a12498efb4d1513fa227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lightswitch
+  lights:
+  - {fileID: 1759474382}
+--- !u!114 &919757629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919757623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6cf36fb8dd3ba46b3d3f39bb06f1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lightsoff
   lights:
   - {fileID: 1759474382}
 --- !u!1 &961739749
@@ -987,7 +1002,7 @@ Transform:
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7181295, z: -0, w: 0.69590956}
-  m_LocalPosition: {x: -31.49, y: 1, z: 4.89}
+  m_LocalPosition: {x: -22.54, y: 1, z: 4.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

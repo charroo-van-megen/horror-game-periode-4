@@ -10,7 +10,7 @@ public class Lightswitch : MonoBehaviour
         
     }
 
-    public Light[] lights;
+    [SerializeField] private Light[] lights;
 
     private void ClickRange()
     {
