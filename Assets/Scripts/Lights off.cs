@@ -13,7 +13,10 @@ public class Lightsoff : MonoBehaviour
     void Update()
     {
         RandomLight();
-        timer += Random.Range(0f, 0.1f); 
+        if (lights[0].enabled)
+        {
+            timer += Random.Range(0f, 0.1f);
+        }
     }
 
 
