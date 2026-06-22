@@ -15,7 +15,7 @@ public class Lightsoff : MonoBehaviour
         RandomLight();
         if (lights[0].enabled)
         {
-            timer += Random.Range(0f, 0.1f);
+            timer += Random.Range(0f, 0.2f);
         }
     }
 
