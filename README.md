@@ -327,6 +327,34 @@ class MouseLook {
     +SetSensitivity(float sensitivity)
 }
 
+class Keypad {
+    +GameObject player
+    +GameObject KeypadOB
+    +GameObject hud
+    +GameObject inv
+    +GameObject cube
+
+    +GameObject animateOB
+
+    +TMP_Text textOB
+
+    +string anwser
+
+    +AudioSource source
+    +AudioClip button
+    +AudioClip correct
+    +AudioClip wrong
+    +AudioClip destroySound
+
+    +bool animate
+
+    +Start()
+    -ResetCode()
+    -CorrectCode()
+    +Number(int number)
+    +Exit()
+}
+
 %% Relationships
 
 Locker --> PlayerMove : disables/enables
@@ -349,7 +377,13 @@ FootstepAudio --> Movement3D : depends on
 AudioBox --> AudioSource
 
 MouseLook --> Transform : rotates
+
+Keypad --> TMP_Text : displays code
+Keypad --> AudioSource : plays sounds
+Keypad --> AudioClip : uses audio clips
+Keypad --> GameObject : controls UI/objects
 ```
+
 # Gemaakt door
 Calvin 
 [keypad](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin)
