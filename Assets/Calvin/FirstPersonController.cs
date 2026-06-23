@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+
 public class FirstPersonController : MonoBehaviour
 {
     public float movementSpeed = 5f;
@@ -8,16 +10,32 @@ public class FirstPersonController : MonoBehaviour
     public Transform playerCamera;
 
     float xRotation = 0f;
+    bool cursorUnlocked = false;
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        LockCursor();
     }
 
     void Update()
     {
-        Look();
+        // E om cursor aan/uit te zetten
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            cursorUnlocked = !cursorUnlocked;
+
+            if (cursorUnlocked)
+                UnlockCursor();
+            else
+                LockCursor();
+        }
+
+        // Alleen kijken als cursor vergrendeld is
+        if (!cursorUnlocked)
+        {
+            Look();
+        }
+
         Move();
     }
 
@@ -43,5 +61,17 @@ public class FirstPersonController : MonoBehaviour
 
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
