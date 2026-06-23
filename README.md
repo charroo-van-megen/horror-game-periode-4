@@ -272,3 +272,149 @@ All interactables must:
 If you want next-level GitHub integration, I can also generate:
 * Issue templates for bugs / features
 * A CI checklist for Unity builds (GitHub Actions-ready)
+
+```mermaid
+classDiagram
+
+class Locker {
+    +Transform hidePosition
+    +Transform exitPosition
+    +GameObject player
+    +MonoBehaviour playerMovement
+    +GameObject playerModel
+    +KeyCode interactKey
+    +float interactDistance
+
+    -bool isPlayerNearby
+    -bool isHiding
+
+    +Update()
+    -CheckDistance()
+    -EnterLocker()
+    -ExitLocker()
+}
+
+class PlayerMove {
+    -float moveSpeed
+    -float sprintSpeed
+    -float groundDrag
+    -float jumpForce
+    -float jumpCooldown
+    -float airMultiplier
+
+    -float playerHeight
+    -LayerMask groundLayer
+    -bool isGrounded
+
+    -Camera playerCamera
+    -float mouseSensitivity
+    -float maxLookAngle
+
+    -Rigidbody rb
+    -Vector3 moveDirection
+    -float xRotation
+    -bool canJump
+
+    +Start()
+    -SetupInputActions()
+    +Update()
+    +FixedUpdate()
+    -HandleInput()
+    -HandleCamera()
+    -ControlSpeed()
+    -SpeedControl()
+    -MovePlayer()
+    -Jump()
+    -ResetJump()
+    +OnDestroy()
+}
+
+class Lightswitch {
+    -float Range
+    +Light[] lights
+
+    +Update()
+    -ClickRange()
+    -ToggleLights()
+}
+
+class Flashlight {
+    -Light flashlight
+    -bool isOn
+
+    -float innerMinAngle
+    -float innerMaxAngle
+    -float outerMinAngle
+    -float outerMaxAngle
+    -float scrollSensitivity
+
+    +Start()
+    +Update()
+}
+
+class BackgroundMusic {
+    +static BackgroundMusic Instance
+    -AudioSource audioSource
+
+    +Awake()
+}
+
+class FootstepAudio {
+    -Movement3D movement
+
+    -AudioClip footstepLoop
+    -AudioClip jumpClip
+
+    -float walkPitch
+    -float sprintPitch
+    -float crouchPitch
+
+    -AudioSource audioSource
+
+    +OnEnable()
+    +OnDisable()
+    +Start()
+    +Update()
+    -PlayJumpSound()
+}
+
+class AudioBox {
+    +AudioSource audioSource
+
+    +Start()
+    +OnMouseDown()
+}
+
+class MouseLook {
+    +Transform playerBody
+    +float mouseSensitivity
+
+    -float xRotation
+
+    +Start()
+    +Update()
+    +SetSensitivity(float sensitivity)
+}
+
+%% Relationships
+
+Locker --> PlayerMove : disables/enables
+Locker --> GameObject : player
+Locker --> Transform : hidePosition
+Locker --> Transform : exitPosition
+
+PlayerMove --> Rigidbody
+PlayerMove --> Camera
+
+Lightswitch --> Light : controls
+
+Flashlight --> Light : controls
+
+BackgroundMusic --> AudioSource
+
+FootstepAudio --> AudioSource
+FootstepAudio --> Movement3D : depends on
+
+AudioBox --> AudioSource
+
+MouseLook --> Transform : rotates
