@@ -394,6 +394,8 @@ Keypad --> GameObject : controls UI/objects
 
 * [keypad](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin)
   Handles keypad interactions and code validation. Plays button/correct/wrong sounds, updates UI text, unlocks objects after entering the correct code, and restores HUD/cursor states.
+* [firstPersonCamera](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Calvin/FirstPersonController.cs)
+  Handles first-person camera rotation, vertical look clamping, mouse sensitivity settings, and cursor locking.
 
 ---
 
@@ -428,9 +430,6 @@ Keypad --> GameObject : controls UI/objects
 
 * [movement](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Movement/PlayerMove.cs)
   Rigidbody-based first-person movement controller using the New Input System with sprinting, jumping, mouse look, and grounded movement handling.
-
-* [Mouselook](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Scripts/camera)
-  Handles first-person camera rotation, vertical look clamping, mouse sensitivity settings, and cursor locking.
 
 ---
 
