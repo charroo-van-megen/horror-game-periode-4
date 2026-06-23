@@ -418,3 +418,7 @@ FootstepAudio --> Movement3D : depends on
 AudioBox --> AudioSource
 
 MouseLook --> Transform : rotates
+```
+# Gemaakt door
+Calvin 
+https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin
