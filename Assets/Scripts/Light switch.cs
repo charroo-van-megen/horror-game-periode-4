@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class Lightswitch : MonoBehaviour
 {
-    private float Range = 5f;   
+    [SerializeField] private Light[] lights;
+    private float Range = 5f;
+    float timer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
-
-    public Light[] lights;
+    void Update()
+    {
+        ClickRange();
+    }
 
     private void ClickRange()
     {
@@ -28,6 +32,7 @@ public class Lightswitch : MonoBehaviour
         }
     }
 
+
     private void ToggleLights()
     {
        foreach (Light light in lights)
@@ -36,10 +41,4 @@ public class Lightswitch : MonoBehaviour
        }
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        ClickRange();
-    }
 }
