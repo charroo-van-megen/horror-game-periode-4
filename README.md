@@ -421,4 +421,18 @@ MouseLook --> Transform : rotates
 ```
 # Gemaakt door
 Calvin 
-https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin
+[keypad](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin)
+
+# Gemaakt Door
+Thomas
+[LightSwitch](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Light%20switch.cs)
+[LightsOff](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Lights%20off.cs)
+
+# Gemaakt Door
+Charroo
+[backgroundSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Background%20music.cs)
+[PlayerSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/FootstepAudio.cs)
+[AudioBox](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Soundbox.cs)
+[movement](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Movement/PlayerMove.cs)
+[Mouselook](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Scripts/camera)
+[Locker](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Locker.cs)
