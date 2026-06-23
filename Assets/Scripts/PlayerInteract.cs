@@ -3,44 +3,56 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
-    Camera playerCam;
+    [SerializeField] private Camera playerCam;
 
     private void Start()
     {
-        playerCam = GetComponent<Camera>();
+        if (playerCam == null)
+        {
+            playerCam = GetComponent<Camera>();
+        }
+        if (playerCam == null)
+        {
+            playerCam = GetComponentInChildren<Camera>();
+        }
+
+        if (playerCam == null)
+        {
+            Debug.LogError("PlayerInteract: No Camera found on Player or its children!");
+            return;
+        }
     }
-    // Update is called once per frame
+
     void Update()
     {
-        // On pressing E, we will check if there is an interactable object in front of the player using a RayCast, then execute the Interact() method on that object.
-        if (playerCam != null)
+        if (playerCam == null)
+            return;
+
+        Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
+        RaycastHit hit;
+
+        // On pressing E, interact
+        bool eKeyPressed = false;
+
+        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            bool eKeyPressed = false;
+            eKeyPressed = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            eKeyPressed = true;
+        }
 
-            // Try new Input System first
-            if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+        if (eKeyPressed)
+        {
+            Debug.Log("E key pressed, checking for interactable objects...");
+            if (Physics.Raycast(ray, out hit, 3f))
             {
-                eKeyPressed = true;
-            }
-            // Fallback to old Input System
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                eKeyPressed = true;
-            }
-
-            if (eKeyPressed)
-            {
-                Debug.Log("E key pressed, checking for interactable objects...");
-                Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 3f))
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable != null)
                 {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
-                    {
-                        Debug.Log("Interacting with " + hit.collider.name);
-                        interactable.Interact();
-                    }
+                    Debug.Log("Interacting with " + hit.collider.name);
+                    interactable.Interact();
                 }
             }
         }

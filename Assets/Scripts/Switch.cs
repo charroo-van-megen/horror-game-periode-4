@@ -4,7 +4,7 @@ using UnityEngine;
 public class Switch : MonoBehaviour, Interactable
 {
     public GameObject[] objectsToToggle;
-    private bool isOn = false;
+    [SerializeField] private bool isOn = false;
 
     public void Interact()
     {

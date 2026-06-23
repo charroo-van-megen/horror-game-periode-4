@@ -32,8 +32,8 @@ public class Flashlight : MonoBehaviour
         if (flashlight == null)
             return;
 
-        // Toggle flashlight with F key
-        if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
+        // Toggle flashlight with RMB
+        if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
             isOn = !isOn;
             flashlight.enabled = isOn;
@@ -43,7 +43,7 @@ public class Flashlight : MonoBehaviour
         if (Mouse.current != null)
         {
             float scrollInput = Mouse.current.scroll.y.ReadValue();
-            
+
             if (scrollInput > 0f) // scroll up - increase angles
             {
                 flashlight.innerSpotAngle = Mathf.Clamp(flashlight.innerSpotAngle + scrollSensitivity, innerMinAngle, innerMaxAngle);
