@@ -385,19 +385,57 @@ Keypad --> GameObject : controls UI/objects
 ```
 
 ## Gemaakt door
-### Calvin 
+
+---
+
+## Calvin
+
+### Keypad System
+
 * [keypad](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin)
+  Handles keypad interactions and code validation. Plays button/correct/wrong sounds, updates UI text, unlocks objects after entering the correct code, and restores HUD/cursor states.
 
-## Gemaakt Door
-### Thomas
+---
+
+## Thomas
+
+### Light Interaction Systems
+
 * [LightSwitch](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Light%20switch.cs)
-* [LightsOff](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Lights%20off.cs)
+  Allows the player to toggle lights on and off using raycast-based interaction within a set range.
 
-## Gemaakt Door
-### Charroo
+* [LightsOff](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Lights%20off.cs)
+  Controls light shutdown behavior for environmental horror effects and scene atmosphere changes.
+
+---
+
+## Charroo
+
+### Audio Systems
+
 * [backgroundSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Background%20music.cs)
+  Persistent background music system using a Singleton pattern to prevent duplicate music across scenes.
+
 * [PlayerSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/FootstepAudio.cs)
+  Plays dynamic footstep and jump audio based on player movement, sprinting, crouching, and grounded state.
+
 * [AudioBox](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Soundbox.cs)
+  Clickable audio object that toggles an `AudioSource` on and off when interacted with.
+
+---
+
+### Movement & Camera
+
 * [movement](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Movement/PlayerMove.cs)
+  Rigidbody-based first-person movement controller using the New Input System with sprinting, jumping, mouse look, and grounded movement handling.
+
 * [Mouselook](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Scripts/camera)
+  Handles first-person camera rotation, vertical look clamping, mouse sensitivity settings, and cursor locking.
+
+---
+
+### Interaction Systems
+
 * [Locker](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Locker.cs)
+  Allows the player to hide inside lockers, disables movement while hidden, hides the player model, and restores the player state when exiting.
+
