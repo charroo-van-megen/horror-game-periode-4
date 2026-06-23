@@ -4,15 +4,15 @@ Below is a **GitHub-optimized README-ready version** with proper heading hierarc
 
 ---
 
-# 🎮 Definition of Done (DoD)
+#  Definition of Done (DoD)
 
 This document defines the minimum quality requirements for all features, scripts, and gameplay systems in this Unity project. A feature is only considered complete when all applicable criteria are met.
 
 ---
 
-## 🌿 Branching & Workflow
+##  Branching & Workflow
 
-### 📌 Branch Rules
+###  Branch Rules
 
 * Feature branches must follow naming convention:
 
@@ -21,7 +21,7 @@ This document defines the minimum quality requirements for all features, scripts
   ```
 * All development must occur on feature branches
 
-### 🔄 Pull Request Requirements
+###  Pull Request Requirements
 
 * Branch must be fully merged without conflicts
 * A Pull Request (PR) must be created for review
@@ -30,9 +30,9 @@ This document defines the minimum quality requirements for all features, scripts
 
 ---
 
-## 📁 Unity Project Structure
+##  Unity Project Structure
 
-### 🗂️ Folder Organization
+###  Folder Organization
 
 Scripts must follow strict folder structure:
 
@@ -43,45 +43,45 @@ Assets/Scripts/movement/
 Assets/Scripts/interactables/
 ```
 
-### 📦 Asset Rules
+###  Asset Rules
 
-* ❌ No scripts in root `Assets/Scripts/`
-* 🎵 Audio files must be placed in:
+*  No scripts in root `Assets/Scripts/`
+*  Audio files must be placed in:
 
   ```
   Assets/Sounds/
   ```
-* 🧩 Prefabs must be used where appropriate (avoid scene-only logic)
-* 🚫 No missing references in scenes
+*  Prefabs must be used where appropriate (avoid scene-only logic)
+*  No missing references in scenes
 
 ---
 
-## 🧱 Code Quality Standards
+##  Code Quality Standards
 
-### ⚙️ General Rules
+###  General Rules
 
-* ❌ No compiler errors or warnings allowed
-* ❌ No runtime `NullReferenceException`
-* 🧩 Code must follow component-based architecture
-* 🚫 Avoid “god scripts” (single scripts handling too much logic)
+*  No compiler errors or warnings allowed
+*  No runtime `NullReferenceException`
+*  Code must follow component-based architecture
+*  Avoid “god scripts” (single scripts handling too much logic)
 
-### 🎮 Input System Rules
+###  Input System Rules
 
 * Do not mix input systems on the same player:
 
   * `PlayerMove` → New Input System
   * `Movement3D` → Old Input System
 
-### 🔁 Unity Update Rules
+###  Unity Update Rules
 
 * `Update()` → Input & state handling only
 * `FixedUpdate()` → Physics logic only
 
 ---
 
-## 🎮 Gameplay Validation
+##  Gameplay Validation
 
-### 🧪 General Gameplay Requirements
+###  General Gameplay Requirements
 
 * Movement must feel responsive and consistent
 * Audio feedback must match gameplay events
@@ -91,13 +91,13 @@ Assets/Scripts/interactables/
 
 ---
 
-# 📜 Script Definition of Done
+#  Script Definition of Done
 
 ---
 
-## 🎧 BackgroundMusic.cs
+##  BackgroundMusic.cs
 
-### 🎯 Requirements
+###  Requirements
 
 * Plays automatically on scene start
 * Implements Singleton pattern (prevents duplicates)
@@ -105,16 +105,16 @@ Assets/Scripts/interactables/
 * No overlapping audio on scene reload
 * Uses valid `AudioSource` component
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * Only one music track plays at all times
 * No duplicate instances across scenes
 
 ---
 
-## 👣 FootstepAudio.cs
+##  FootstepAudio.cs
 
-### 🎯 Requirements
+###  Requirements
 
 * Only plays when:
 
@@ -128,32 +128,32 @@ Assets/Scripts/interactables/
 * Jump sound triggered via `Movement3D.OnJump`
 * Footstep loop starts/stops cleanly (no audio delay issues)
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * No footsteps while idle
 * No duplicate jump sounds
 
 ---
 
-## 🔊 AudioBox.cs
+##  AudioBox.cs
 
-### 🎯 Requirements
+###  Requirements
 
 * Uses `OnMouseDown()` for interaction
 * Toggles audio play/stop correctly
 * Requires valid `AudioSource`
 * Must be null-safe (no missing component crashes)
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * Immediate response on click
 * Toggle state remains consistent
 
 ---
 
-## 🎥 MouseLook.cs
+##  MouseLook.cs
 
-### 🎯 Requirements
+###  Requirements
 
 * Smooth real-time mouse camera movement
 * Vertical rotation clamped:
@@ -165,16 +165,16 @@ Assets/Scripts/interactables/
 * Sensitivity saved using `PlayerPrefs`
 * Cursor locked during gameplay
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * No jitter or camera flipping
 * No inverted or unstable controls
 
 ---
 
-## 🕹 PlayerMove.cs (New Input System)
+##  PlayerMove.cs (New Input System)
 
-### 🎯 Requirements
+###  Requirements
 
 * WASD movement via New Input System
 * Jump with cooldown + grounded check
@@ -184,7 +184,7 @@ Assets/Scripts/interactables/
 * Camera follows mouse delta input
 * Escape key unlocks cursor
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * No movement jitter
 * No input delay or stuck states
@@ -192,9 +192,9 @@ Assets/Scripts/interactables/
 
 ---
 
-## 🚪 Locker.cs
+##  Locker.cs
 
-### 🎯 Requirements
+###  Requirements
 
 * Player can interact within `interactDistance`
 * `E` toggles enter/exit state
@@ -202,7 +202,7 @@ Assets/Scripts/interactables/
 * Hides player model when inside locker
 * Teleports player to correct hide/exit positions
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * No clipping during transitions
 * No stuck state inside locker
@@ -210,9 +210,9 @@ Assets/Scripts/interactables/
 
 ---
 
-## 🏃 Movement3D.cs (Legacy Controller)
+##  Movement3D.cs (Legacy Controller)
 
-### 🎯 Requirements
+###  Requirements
 
 * WASD movement via Old Input System
 * Jump via `Input.GetButton("Jump")`
@@ -221,7 +221,7 @@ Assets/Scripts/interactables/
 * Direct Rigidbody velocity control
 * `OnJump` event is triggered correctly
 
-### ✅ Acceptance Criteria
+###  Acceptance Criteria
 
 * No ground sliding
 * Jump is consistent and reproducible
@@ -229,19 +229,19 @@ Assets/Scripts/interactables/
 
 ---
 
-# 🏗 Architecture Rules (Critical)
+#  Architecture Rules (Critical)
 
 ---
 
-## 🎮 Input System Separation
+##  Input System Separation
 
 * `PlayerMove` → New Input System
 * `Movement3D` → Old Input System
-* ❗ Never enable both on the same player object
+*  Never enable both on the same player object
 
 ---
 
-## 🔊 Audio Architecture Rules
+##  Audio Architecture Rules
 
 * One-shot sounds → `PlayClipAtPoint`
 * Looping sounds → `AudioSource.loop = true`
@@ -249,16 +249,16 @@ Assets/Scripts/interactables/
 
 ---
 
-## 🧍 Movement Architecture Rules
+##  Movement Architecture Rules
 
 * Rigidbody-based movement only
-* ❌ No mixing with `transform.Translate`
+*  No mixing with `transform.Translate`
 * Input handled in `Update()`
 * Physics handled in `FixedUpdate()`
 
 ---
 
-## 🔗 Interactable System Rules
+##  Interactable System Rules
 
 All interactables must:
 
