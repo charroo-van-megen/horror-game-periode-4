@@ -4,271 +4,400 @@ Below is a **GitHub-optimized README-ready version** with proper heading hierarc
 
 ---
 
-#  Definition of Done (DoD)
+# Definition of Done (DoD)
 
-This document defines the minimum quality requirements for all features, scripts, and gameplay systems in this Unity project. A feature is only considered complete when all applicable criteria are met.
+This document defines the minimum quality standards required before any feature, gameplay system, script, prefab, or interaction can be considered complete and ready for merge.
 
----
-
-##  Branching & Workflow
-
-###  Branch Rules
-
-* Feature branches must follow naming convention:
-
-  ```
-  feature/<feature-name>
-  ```
-* All development must occur on feature branches
-
-###  Pull Request Requirements
-
-* Branch must be fully merged without conflicts
-* A Pull Request (PR) must be created for review
-* Build must be tested successfully before review
-* PR must not contain unfinished (WIP) logic
+A task is only considered **Done** when all applicable requirements below are satisfied.
 
 ---
 
-##  Unity Project Structure
+# Core Quality Requirements
 
-###  Folder Organization
+All systems and features must meet the following standards:
 
-Scripts must follow strict folder structure:
+## Stability
 
-```
+* No compiler errors
+* No compiler warnings
+* No runtime exceptions
+* No `NullReferenceException`
+* No broken references in scenes or prefabs
+* No softlocks or unrecoverable gameplay states
+
+---
+
+## Functionality
+
+* Feature works as intended in all expected gameplay scenarios
+* Feature can be repeatedly tested without breaking
+* Interactions are responsive and consistent
+* Systems recover correctly from state changes
+* Toggleable systems return to valid states reliably
+
+---
+
+## Bug-Free Requirement
+
+Before merging:
+
+* Feature must be tested in Play Mode
+* No known critical bugs may remain
+* No inconsistent behavior between sessions
+* Physics behavior must remain stable and reproducible
+* Edge cases must be tested where applicable
+
+Examples:
+
+* No player clipping
+* No duplicate audio playback
+* No stuck movement states
+* No interaction spam exploits
+* No broken camera states
+
+---
+
+# Architecture Standards
+
+## Component-Based Design
+
+Scripts must follow Unity component architecture principles:
+
+* Single responsibility per script
+* Avoid large “god scripts”
+* Reusable systems preferred over hardcoded logic
+* Prefab-driven workflows encouraged
+
+---
+
+## Input System Rules
+
+Input systems must never be mixed on the same player object.
+
+### Approved Separation
+
+| System       | Input Type       |
+| ------------ | ---------------- |
+| `PlayerMove` | New Input System |
+| `Movement3D` | Old Input System |
+
+---
+
+## Physics Rules
+
+* Rigidbody-based movement only
+* No `transform.Translate()` movement for physics characters
+* Physics handled in `FixedUpdate()`
+* Input handled in `Update()`
+
+---
+
+## Audio Rules
+
+* Looping sounds use `AudioSource.loop`
+* One-shot sounds use `PlayClipAtPoint`
+* Persistent music uses Singleton architecture
+* No overlapping duplicate audio instances
+
+---
+
+## Interactable Rules
+
+All interactables must:
+
+* Be distance-aware where appropriate
+* Be null-safe
+* Avoid hard scene references
+* Support proper toggle/state handling
+* Fail gracefully if references are missing
+
+---
+
+# Performance Requirements
+
+Features must avoid unnecessary overhead.
+
+## Requirements
+
+* Avoid expensive operations inside `Update()`
+* Cache references where possible
+* Avoid repeated `GetComponent()` calls
+* No excessive physics allocations
+* No memory leaks from persistent objects
+
+---
+
+# Scene & Prefab Standards
+
+## Scene Rules
+
+* No missing references
+* No unused GameObjects
+* No duplicate manager systems
+* Lighting and audio must initialize correctly
+
+## Prefab Rules
+
+* Reusable systems should use prefabs
+* Prefabs must have valid references assigned
+* Prefabs should not depend on scene-only objects unless documented
+
+---
+
+# Folder Structure Requirements
+
+Scripts must follow project folder organization:
+
+```text
 Assets/Scripts/audio/
 Assets/Scripts/camera/
 Assets/Scripts/movement/
 Assets/Scripts/interactables/
 ```
 
-###  Asset Rules
+Additional assets:
 
-*  No scripts in root `Assets/Scripts/`
-*  Audio files must be placed in:
-
-  ```
-  Assets/Sounds/
-  ```
-*  Prefabs must be used where appropriate (avoid scene-only logic)
-*  No missing references in scenes
+```text
+Assets/Sounds/
+Assets/Prefabs/
+Assets/Materials/
+Assets/Scenes/
+```
 
 ---
 
-##  Code Quality Standards
+# Pull Request Requirements
 
-###  General Rules
+Before merge:
 
-*  No compiler errors or warnings allowed
-*  No runtime `NullReferenceException`
-*  Code must follow component-based architecture
-*  Avoid “god scripts” (single scripts handling too much logic)
-
-###  Input System Rules
-
-* Do not mix input systems on the same player:
-
-  * `PlayerMove` → New Input System
-  * `Movement3D` → Old Input System
-
-###  Unity Update Rules
-
-* `Update()` → Input & state handling only
-* `FixedUpdate()` → Physics logic only
+* Feature branch created correctly
+* Pull Request opened
+* Build tested successfully
+* No unfinished/WIP logic
+* No debug spam left in production code
+* README/documentation updated if feature changes architecture
 
 ---
 
-##  Gameplay Validation
+# Testing Requirements
 
-###  General Gameplay Requirements
+The following must be verified before approval:
 
-* Movement must feel responsive and consistent
-* Audio feedback must match gameplay events
-* No softlocks or broken interaction states
-* Features must be toggleable without breaking scenes
-* Physics must behave consistently across sessions
-
----
-
-#  Script Definition of Done
+* Gameplay flow works correctly
+* Input behaves consistently
+* Audio triggers correctly
+* Camera behaves correctly
+* Physics interactions are stable
+* Scene transitions do not break systems
 
 ---
 
-##  BackgroundMusic.cs
+# Final Acceptance Criteria
 
-###  Requirements
+A feature is considered complete only if:
 
-* Plays automatically on scene start
-* Implements Singleton pattern (prevents duplicates)
-* Persists across scenes (`DontDestroyOnLoad`)
-* No overlapping audio on scene reload
-* Uses valid `AudioSource` component
+* It is stable
+* It is tested
+* It is maintainable
+* It follows architecture standards
+* It introduces no regressions
+* It can be merged without additional fixes required
 
-###  Acceptance Criteria
 
-* Only one music track plays at all times
-* No duplicate instances across scenes
+```mermaid
+classDiagram
 
----
+class Locker {
+    +Transform hidePosition
+    +Transform exitPosition
+    +GameObject player
+    +MonoBehaviour playerMovement
+    +GameObject playerModel
+    +KeyCode interactKey
+    +float interactDistance
 
-##  FootstepAudio.cs
+    -bool isPlayerNearby
+    -bool isHiding
 
-###  Requirements
+    +Update()
+    -CheckDistance()
+    -EnterLocker()
+    -ExitLocker()
+}
 
-* Only plays when:
+class PlayerMove {
+    -float moveSpeed
+    -float sprintSpeed
+    -float groundDrag
+    -float jumpForce
+    -float jumpCooldown
+    -float airMultiplier
 
-  * Player is moving
-  * Player is grounded
-* Pitch system:
+    -float playerHeight
+    -LayerMask groundLayer
+    -bool isGrounded
 
-  * Crouch → lower pitch
-  * Walk → default pitch
-  * Sprint → higher pitch
-* Jump sound triggered via `Movement3D.OnJump`
-* Footstep loop starts/stops cleanly (no audio delay issues)
+    -Camera playerCamera
+    -float mouseSensitivity
+    -float maxLookAngle
 
-###  Acceptance Criteria
+    -Rigidbody rb
+    -Vector3 moveDirection
+    -float xRotation
+    -bool canJump
 
-* No footsteps while idle
-* No duplicate jump sounds
+    +Start()
+    -SetupInputActions()
+    +Update()
+    +FixedUpdate()
+    -HandleInput()
+    -HandleCamera()
+    -ControlSpeed()
+    -SpeedControl()
+    -MovePlayer()
+    -Jump()
+    -ResetJump()
+    +OnDestroy()
+}
 
----
+class Lightswitch {
+    -float Range
+    +Light[] lights
 
-##  AudioBox.cs
+    +Update()
+    -ClickRange()
+    -ToggleLights()
+}
 
-###  Requirements
+class Flashlight {
+    -Light flashlight
+    -bool isOn
 
-* Uses `OnMouseDown()` for interaction
-* Toggles audio play/stop correctly
-* Requires valid `AudioSource`
-* Must be null-safe (no missing component crashes)
+    -float innerMinAngle
+    -float innerMaxAngle
+    -float outerMinAngle
+    -float outerMaxAngle
+    -float scrollSensitivity
 
-###  Acceptance Criteria
+    +Start()
+    +Update()
+}
 
-* Immediate response on click
-* Toggle state remains consistent
+class BackgroundMusic {
+    +static BackgroundMusic Instance
+    -AudioSource audioSource
 
----
+    +Awake()
+}
 
-##  MouseLook.cs
+class FootstepAudio {
+    -Movement3D movement
 
-###  Requirements
+    -AudioClip footstepLoop
+    -AudioClip jumpClip
 
-* Smooth real-time mouse camera movement
-* Vertical rotation clamped:
+    -float walkPitch
+    -float sprintPitch
+    -float crouchPitch
 
-  ```
-  -90° to +90°
-  ```
-* Horizontal rotation applied to player body
-* Sensitivity saved using `PlayerPrefs`
-* Cursor locked during gameplay
+    -AudioSource audioSource
 
-###  Acceptance Criteria
+    +OnEnable()
+    +OnDisable()
+    +Start()
+    +Update()
+    -PlayJumpSound()
+}
 
-* No jitter or camera flipping
-* No inverted or unstable controls
+class AudioBox {
+    +AudioSource audioSource
 
----
+    +Start()
+    +OnMouseDown()
+}
 
-##  PlayerMove.cs (New Input System)
+class MouseLook {
+    +Transform playerBody
+    +float mouseSensitivity
 
-###  Requirements
+    -float xRotation
 
-* WASD movement via New Input System
-* Jump with cooldown + grounded check
-* Sprint increases movement speed
-* Rigidbody-based movement (no transform movement)
-* Gravity handled consistently
-* Camera follows mouse delta input
-* Escape key unlocks cursor
+    +Start()
+    +Update()
+    +SetSensitivity(float sensitivity)
+}
 
-###  Acceptance Criteria
+class Keypad {
+    +GameObject player
+    +GameObject KeypadOB
+    +GameObject hud
+    +GameObject inv
+    +GameObject cube
 
-* No movement jitter
-* No input delay or stuck states
-* Stable Rigidbody physics behavior
+    +GameObject animateOB
 
----
+    +TMP_Text textOB
 
-##  Locker.cs
+    +string anwser
 
-###  Requirements
+    +AudioSource source
+    +AudioClip button
+    +AudioClip correct
+    +AudioClip wrong
+    +AudioClip destroySound
 
-* Player can interact within `interactDistance`
-* `E` toggles enter/exit state
-* Disables player movement while hidden
-* Hides player model when inside locker
-* Teleports player to correct hide/exit positions
+    +bool animate
 
-###  Acceptance Criteria
+    +Start()
+    -ResetCode()
+    -CorrectCode()
+    +Number(int number)
+    +Exit()
+}
 
-* No clipping during transitions
-* No stuck state inside locker
-* Movement restores reliably
+%% Relationships
 
----
+Locker --> PlayerMove : disables/enables
+Locker --> GameObject : player
+Locker --> Transform : hidePosition
+Locker --> Transform : exitPosition
 
-##  Movement3D.cs (Legacy Controller)
+PlayerMove --> Rigidbody
+PlayerMove --> Camera
 
-###  Requirements
+Lightswitch --> Light : controls
 
-* WASD movement via Old Input System
-* Jump via `Input.GetButton("Jump")`
-* Sprint and crouch states supported
-* Ground check using Physics sphere
-* Direct Rigidbody velocity control
-* `OnJump` event is triggered correctly
+Flashlight --> Light : controls
 
-###  Acceptance Criteria
+BackgroundMusic --> AudioSource
 
-* No ground sliding
-* Jump is consistent and reproducible
-* Crouch correctly modifies collider
+FootstepAudio --> AudioSource
+FootstepAudio --> Movement3D : depends on
 
----
+AudioBox --> AudioSource
 
-#  Architecture Rules (Critical)
+MouseLook --> Transform : rotates
 
----
+Keypad --> TMP_Text : displays code
+Keypad --> AudioSource : plays sounds
+Keypad --> AudioClip : uses audio clips
+Keypad --> GameObject : controls UI/objects
+```
 
-##  Input System Separation
+# Gemaakt door
+Calvin 
+[keypad](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Calvin)
 
-* `PlayerMove` → New Input System
-* `Movement3D` → Old Input System
-*  Never enable both on the same player object
+# Gemaakt Door
+Thomas
+[LightSwitch](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Light%20switch.cs)
+[LightsOff](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Lights%20off.cs)
 
----
-
-##  Audio Architecture Rules
-
-* One-shot sounds → `PlayClipAtPoint`
-* Looping sounds → `AudioSource.loop = true`
-* Persistent music → Singleton (`BackgroundMusic`)
-
----
-
-##  Movement Architecture Rules
-
-* Rigidbody-based movement only
-*  No mixing with `transform.Translate`
-* Input handled in `Update()`
-* Physics handled in `FixedUpdate()`
-
----
-
-##  Interactable System Rules
-
-All interactables must:
-
-* Include distance-based interaction checks
-* Support toggle state behavior
-* Avoid hard scene references
-* Be null-safe (defensive programming required)
-
----
-
-If you want next-level GitHub integration, I can also generate:
-* Issue templates for bugs / features
-* A CI checklist for Unity builds (GitHub Actions-ready)
+# Gemaakt Door
+Charroo
+[backgroundSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Background%20music.cs)
+[PlayerSound](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/FootstepAudio.cs)
+[AudioBox](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/audio/Soundbox.cs)
+[movement](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Movement/PlayerMove.cs)
+[Mouselook](https://github.com/charroo-van-megen/horror-game-periode-4/tree/main/Assets/Scripts/camera)
+[Locker](https://github.com/charroo-van-megen/horror-game-periode-4/blob/main/Assets/Scripts/Locker.cs)
